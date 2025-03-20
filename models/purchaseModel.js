@@ -23,7 +23,7 @@ const Purchase = {
 
     getRecentPurchases: (callback) => {
         db.query(
-            "SELECT username, rank, price, created_at FROM purchases ORDER BY created_at DESC LIMIT 5",
+            "SELECT username, rank, price, created_at FROM purchases WHERE status = 'completed' ORDER BY created_at DESC LIMIT 5",
             callback
         );
     },
