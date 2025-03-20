@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Purchase = require("../models/Purchase"); // Assuming you have a Purchase model
+const Purchase = require("../models/purchaseModel");; // Assuming you have a Purchase model
 
 router.post("/pay-success", async (req, res) => {
     try {
