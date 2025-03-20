@@ -1,27 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const Purchase = require("../models/purchaseModel");; // Assuming you have a Purchase model
+const Purchase = require("../models/purchaseModel");
 
 router.post("/pay-success", async (req, res) => {
     try {
-        const { username, rank, amount, order_id } = req.body;
+        const { username, rank, price } = req.body;
 
-        if (!username || !rank || !amount || !order_id) {
+        if (!username || !rank || !price) {
             return res.status(400).json({ error: "Missing required fields" });
         }
 
-        // Save the purchase in the database
-        Purchase.createPurchase(username, rank, amount, (err) => {
+        // Insert into database with status 'completed'
+        Purchase.createPurchase(username, rank, price, (err) => {
             if (err) {
                 console.error("❌ Database Insert Error:", err);
                 return res.status(500).json({ error: "Database error" });
             }
-            console.log(`✅ Purchase recorded: ${username} bought ${rank} for ₹${amount}`);
+
+            console.log(`✅ Payment Success: ${username} bought ${rank} for ₹${price}`);
             return res.json({ success: true });
         });
-
     } catch (error) {
-        console.error("❌ Error in /api/pay-success:", error);
+        console.error("❌ API Error:", error);
         return res.status(500).json({ error: "Internal server error" });
     }
 });
