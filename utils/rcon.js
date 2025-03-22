@@ -6,9 +6,9 @@ const rconConfig = {
     password: process.env.RCON_PASSWORD || "YOUR_RCON_PASSWORD",
 };
 
-const executeRconCommand = (username, rank, duration) => {
+const executeRconCommand = (username, rank, duration, cb) => {
     return new Promise((resolve, reject) => {
-        console.log("Duration: ", duration);
+        console.log("ClaimBlocks: ", cb);
         if (!username || !rank) {
             return reject("Username and rank are required");
         }
@@ -18,6 +18,7 @@ const executeRconCommand = (username, rank, duration) => {
         //when purchased subscription based rank
         if (duration) {
             const command = `lp user ${username} group addtemp ${rank} ${duration}`;
+
             rcon
                 .on("auth", () => {
                     console.log("✅ RCON Connected.");
@@ -35,13 +36,17 @@ const executeRconCommand = (username, rank, duration) => {
         //wehn purchased permanent rank
         else {
             const command = `lp user ${username} group add ${rank}`;
+            const command2 = `acb ${username} ${cb}`;
             rcon
                 .on("auth", () => {
                     console.log("✅ RCON Connected.");
                     rcon.send(command);
+                    rcon.send(command2);
                     setTimeout(() => rcon.disconnect(), 500);
                     resolve(`Command executed: ${command}`);
+                    resolve(`Command executed: ${command2}`);
                     console.log("Command: ", command);
+                    console.log("Command2: ", command2);
                 })
                 .on("error", (err) => {
                     console.error("❌ RCON Error:", err);
