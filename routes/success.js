@@ -5,7 +5,7 @@ const Purchase = require("../models/purchaseModel");
 router.post("/pay-success", async (req, res) => {
     try {
         const { username, rank, price } = req.body;
-
+        console.log("Rank: ", rank);
         if (!username || !rank || !price) {
             return res.status(400).json({ error: "Missing required fields" });
         }
