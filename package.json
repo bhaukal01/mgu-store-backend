@@ -17,6 +17,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
+    "node-cron": "^3.0.3",
     "rcon": "^1.1.0",
     "rcon-client": "^4.2.5"
   }

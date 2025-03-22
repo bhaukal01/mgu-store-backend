@@ -17,7 +17,7 @@ const executeRconCommand = (username, rank, duration) => {
 
         //when purchased subscription based rank
         if (duration) {
-            const command = `lp user ${username} group add ${rank} ${duration}`;
+            const command = `lp user ${username} group addtemp ${rank} ${duration}`;
             rcon
                 .on("auth", () => {
                     console.log("✅ RCON Connected.");
