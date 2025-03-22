@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const purchaseRoutes = require("./routes/purchaseRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const successRoute = require("./routes/success");
+const rconRoute = require("./routes/rconRoute");
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 // 🛒 User Purchases & Payments
 app.use("/api/purchase", purchaseRoutes);
 app.use("/api", successRoute);
+app.use("/api", rconRoute);
 
 // 🔐 Admin Panel
 app.use("/api/admin", adminRoutes);
