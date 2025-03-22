@@ -1,14 +1,14 @@
 const Rcon = require("rcon");
 
-// RCON Configuration
 const rconConfig = {
     host: process.env.RCON_HOST || "YOUR_SERVER_IP",
     port: process.env.RCON_PORT || 25575,
     password: process.env.RCON_PASSWORD || "YOUR_RCON_PASSWORD",
 };
 
-const executeRconCommand = (username, rank) => {
+const executeRconCommand = (username, rank, duration) => {
     return new Promise((resolve, reject) => {
+        console.log("Duration: ", duration);
         if (!username || !rank) {
             return reject("Username and rank are required");
         }
@@ -18,9 +18,9 @@ const executeRconCommand = (username, rank) => {
         rcon
             .on("auth", () => {
                 console.log("✅ RCON Connected.");
-                const command = `/lp user ${username} group add ${rank}`;
+                const command = `lp user ${username} group add ${rank}`;
                 rcon.send(command);
-                rcon.end();
+                setTimeout(() => rcon.disconnect(), 500); // ✅ Use disconnect() instead of end()
                 resolve(`Command executed: ${command}`);
             })
             .on("error", (err) => {
